@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Save Image Router options</title>
+
+    <link rel="stylesheet" href="vendor/material.min.css">
+    <link rel="stylesheet" href="vendor/getmdl-select.min.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <script src="vendor/jquery-3.0.0.min.js"></script>
+    <script src="vendor/jquery-ui.min.js"></script>
+    <script src="vendor/material.min.js"></script>
+    <script src="vendor/getmdl-select.min.js"></script>
+
+    <style>
+        @font-face {
+            font-family: 'OpenSans-Light';
+            src: url('fonts/OpenSans-Light.ttf') format('truetype');
+            font-weight: 100;
+        }
+
+        @font-face {
+            font-family: 'Raleway-Thin';
+            src: url('fonts/Raleway-Thin.ttf') format('truetype');
+            font-weight: 100;
+        }
+
+        @font-face {
+            font-family: 'RobotoMono-Regular';
+            src: url('fonts/RobotoMono-Regular.ttf') format('truetype');
+            font-weight: 400;
+        }
+
+        body {
+            font-family: 'OpenSans-Light', sans-serif;
+            font-size: 100%;
+            font-weight: 100;
+            line-height: 1.6;
+        }
+        table {
+            width: 100%;
+            background: white;
+        }
+        .logo-container {
+            display: flex;
+            justify-content: center;
+        }
+        .logo-container h1 {
+            padding-top: 15px;
+        }
+
+        img.logo-image {
+            display: block;
+            padding-right: 15px;
+        }
+
+        h1, h2 {
+            font-family: 'Raleway-Thin', sans-serif;
+            text-align: center;
+            font-weight: 100;
+        }
+        h1 {
+            font-size: 320%;
+            margin: .07em 0;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 0;
+            margin-top: 14px;
+        }
+
+        .content {
+            padding: 22px;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 960px;
+            min-width: 960px;
+        }
+        .description {
+            text-align: center;
+        }
+        .button-small {
+            font-size: 75%;
+        }
+
+        td.handle {
+            text-align: center;
+            padding: .5em .4em;
+            width: 1px;
+            white-space: nowrap;
+        }
+
+        td.title {
+            width: 1px;
+            white-space: nowrap;
+            cursor: default;
+        }
+
+        th {
+            cursor: default;
+            line-height: 28px;
+        }
+
+        td.directory {
+            font-family: 'RobotoMono-Regular', monospace;
+            font-size: 80%;
+            background-color: #FFF8E1;
+            cursor: default;
+        }
+
+        th.dialog {
+            text-align: center;
+            width: 1px;
+            white-space: nowrap;
+            padding: 4px;
+        }
+
+        td.dialog {
+            text-align: center;
+            width: 1px;
+            white-space: nowrap;
+            padding: 4px;
+        }
+
+        th.rename {
+            text-align: center;
+            width: 1px;
+            white-space: nowrap;
+            padding: 4px;
+        }
+
+        td.rename {
+            text-align: center;
+            width: 1px;
+            white-space: nowrap;
+            cursor: default;
+            padding: 4px;
+        }
+
+        th.if-exists {
+            text-align: center;
+            width: 127px;
+            white-space: nowrap;
+            padding: 4px;
+        }
+
+        td.if-exists {
+            text-align: center;
+            width: 1px;
+            white-space: nowrap;
+            cursor: default;
+            padding: 4px;
+        }
+
+        td.actions {
+            text-align: center;
+            font-size: 120%;
+            width: 1px;
+            white-space: nowrap;
+        }
+
+        tr.new-entry td {
+            border-bottom: 0px;
+        }
+
+        tr.rename-box {
+            display: none;
+        }
+
+        tr.rename-box td {
+            border-top: 0px;
+            text-align: center !important;
+            background-color: #E1F5FE;
+            padding-top: 0px !important;
+        }
+
+        span.rename-title {
+            font-weight: bold;
+        }
+
+        div#prefix-input-container, div#name-input-container, div#suffix-input-container {
+            width: 140px !important;
+            padding: 8px 0;
+        }
+
+        .new-entry {
+            background-color: #E1F5FE;
+        }
+
+        .mdl-data-table tbody tr:hover {
+            background-color: #E1F5FE;
+        }
+
+        .fa-bars {
+            cursor: -moz-grab;
+            cursor: -webkit-grab;
+            cursor: grab;
+        }
+
+        .fa-times, .fa-check {
+            cursor: default;
+            padding-top: 6px;
+        }
+
+        .fa-times {
+            color: rgb(202, 60, 60);
+        }
+
+        .fa-check {
+            color: rgb(28, 184, 65);
+        }
+
+        .footer {
+            text-align: center;
+        }
+
+        .copyright {
+            font-size: 80%;
+        }
+
+        .new-entry .mdl-textfield {
+            width: 100% !important;
+            padding: 6px 0;
+            display: block;
+        }
+
+        .mdl-checkbox.is-upgraded {
+            padding-left: 17px;
+        }
+
+        .mdl-checkbox {
+            width: initial;
+        }
+
+        .mdl-checkbox__focus-helper {
+            top: 5px;
+        }
+
+        .mdl-data-table th {
+            padding-bottom: 10px;
+        }
+
+        .mdl-data-table td {
+            padding: 3px 8px;
+        }
+
+        .mdl-button--fab.mdl-button--mini-fab {
+            height: 30px;
+            min-width: 30px;
+            width: 30px;
+        }
+
+        .mdl-data-table td:first-of-type, .mdl-data-table th:first-of-type {
+            padding-left: 12px;
+            padding-right: 0;
+            padding-top: 8px;
+        }
+
+        .mdl-data-table td.last {
+            padding-top: 4px;
+        }
+
+        .mdl-data-table td:last-of-type, .mdl-data-table th:last-of-type {
+            padding-right: 9px;
+            padding-left: 9px;
+        }
+
+        .mdl-textfield-dir {
+            width: 100%;
+        }
+
+        .material-icons {
+            font-size: 18px;
+        }
+
+        .mdl-textfield__input {
+            font-size: 13px;
+            font-family: "OpenSans-Light", sans-serif;
+            font-weight: 100;
+        }
+
+        .mdl-textfield__label {
+            color: rgba(0,0,0,.56);
+            font-size: 13px;
+            top: 10px;
+        }
+
+        .mdl-textfield__label:after {
+            bottom: 5px;
+        }
+
+        .mdl-checkbox__box-outline {
+            top: 5px;
+        }
+
+        .mdl-checkbox__ripple-container {
+            top: -5px;
+        }
+
+        .mdl-menu {
+            min-width: 90px;
+        }
+
+        .mdl-menu__item {
+            height: 32px;
+            line-height: 32px;
+        }
+
+        .getmdl-select .mdl-menu__container .mdl-menu .mdl-menu__item {
+            font-size: 13px;
+        }
+
+        ul.rename-list {
+            list-style-type: none;
+            margin: 0;
+            padding-left: 0;
+            font-size: 11px;
+            line-height: 11px;
+        }
+
+        #errors {
+            color: white;
+            background-color: #F44336;
+            margin: 15px;
+            text-align: center;
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+            display: none;
+        }
+
+        #status {
+            color: white;
+            background-color: #43A047;
+            margin: 15px;
+            text-align: center;
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+            display: none;
+        }
+
+        #hints {
+            position: relative;
+            border: 1px dotted silver;
+            padding: 5px;
+            margin: 0 16px;
+        }
+        .hints-title {
+            text-align: center;
+            margin-bottom: 0px;
+        }
+        .hints-title:hover {
+            background-color: #eee;
+            cursor: pointer;
+        }
+        .hints-toggle {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 24px;
+        }
+        .hint {
+            display: none;
+            font-size: 90%;
+            text-align: center;
+            background-color: #fffde7;
+            margin: 5px 8px 5px 8px;
+            line-height: 16px;
+            padding: 4px;
+        }
+        .hint .mono {
+            font-family: 'RobotoMono-Regular', monospace;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="content">
+        <div class="logo-container">
+            <img class="logo-image" src="SaveImageRouter_128x128.png" width="128px" height="128px">
+            <div>
+                <h1>Save Image Router</h1>
+                <p class="description">Save images to custom locations from the context menu.</p>
+            </div>
+        </div>
+        <br>
+        <div id="hints">
+            <p class="hints-title">Hints<i class="material-icons hints-toggle">keyboard_arrow_up</i></p>
+            <p class="hint">
+                Chrome allows saving files only within the configured downloads location. All the configured directories will go under the downloads location of Chrome. E.g. directory <span class="mono">`Nature`</span> will become <span class="mono">`/Users/name/Downloads/Nature`</span> when <span class="mono">`/Users/name/Downloads`</span> is the configured download location in Chrome.
+            </p>
+            <p class="hint">
+                If the browser keeps opening the save dialog, make sure to uncheck "Ask where to save each file before downloading" in Chrome settings.
+            </p>
+            <p class="hint">
+                Use slash (<span class="mono">`/`</span>) or backslash (<span class="mono">`\`</span>) for sub-directories. Empty directory will go to the Chrome download location directly.
+            </p>
+            <p class="hint">
+                Directory names may not contain these characters: <span class="mono">? : ~ " < > * |</span>
+            </p>
+        </div>
+        <h2>Directories</h2>
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--12-col">
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                    <thead>
+                        <tr>
+                            <th class="mdl-data-table__cell--non-numeric"></th>
+                            <th class="mdl-data-table__cell--non-numeric">title</th>
+                            <th class="mdl-data-table__cell--non-numeric">directory</th>
+                            <th class="dialog mdl-data-table__cell">dialog</th>
+                            <th class="rename mdl-data-table__cell">rename</th>
+                            <th class="if-exists mdl-data-table__cell">If exists</th>
+                            <th class="mdl-data-table__cell--non-numeric"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="entries">
+                        <tr class="new-entry">
+                            <td class="mdl-data-table__cell--non-numeric last" colspan="2">
+                                <div class="mdl-textfield mdl-js-textfield">
+                                    <input class="mdl-textfield__input" type="text" id="title-input">
+                                    <label class="mdl-textfield__label" for="title-input">title</label>
+                                </div>
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric">
+                                <div class="mdl-textfield mdl-textfield-dir mdl-js-textfield">
+                                    <input class="mdl-textfield__input" type="text" id="directory-input">
+                                    <label class="mdl-textfield__label" for="directory-input">directory</label>
+                                </div>
+                            </td>
+                            <td class="dialog mdl-data-table__cell">
+                                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="dialog-input">
+                                    <input type="checkbox" id="dialog-input" class="mdl-checkbox__input">
+                                </label>
+                            </td>
+                            <td class="rename mdl-data-table__cell">
+                                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="rename-input" id="rename-input-container">
+                                    <input type="checkbox" id="rename-input" class="mdl-checkbox__input">
+                                </label>
+                            </td>
+                            <td class="if-exists mdl-data-table__cell">
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select" id="if-exists-input-container">
+                                    <input class="mdl-textfield__input" type="text" id="if-exists-input" value="rename" readonly tabIndex="-1">
+                                    <label for="if-exists-input">
+                                        <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+                                    </label>
+                                    <ul for="if-exists-input" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                                        <li class="mdl-menu__item">rename</li>
+                                        <li class="mdl-menu__item">overwrite</li>
+                                        <li class="mdl-menu__item">dialog</li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td class="actions mdl-data-table__cell--non-numeric">
+                                <button id="add-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-js-ripple-effect" title="add">
+                                    <i class="material-icons">add</i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="rename-box">
+                            <td class="mdl-data-table__cell" colspan="7">
+                                <span class="rename-title">rename: </span>
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select" id="prefix-input-container">
+                                    <input class="mdl-textfield__input" type="text" id="prefix-input" value="no prefix" readonly tabIndex="-1">
+                                    <label for="prefix-input">
+                                        <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+                                    </label>
+                                    <ul for="prefix-input" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                                        <li class="mdl-menu__item">no prefix</li>
+                                        <li class="mdl-menu__item">timestamp prefix</li>
+                                        <li class="mdl-menu__item">host prefix</li>
+                                    </ul>
+                                </div>
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select" id="name-input-container">
+                                    <input class="mdl-textfield__input" type="text" id="name-input" value="keep original name" readonly tabIndex="-1">
+                                    <label for="name-input">
+                                        <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+                                    </label>
+                                    <ul for="name-input" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                                        <li class="mdl-menu__item">keep original name</li>
+                                        <li class="mdl-menu__item">"SaveImageRouter"</li>
+                                        <li class="mdl-menu__item">empty name</li>
+                                    </ul>
+                                </div>
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select" id="suffix-input-container">
+                                    <input class="mdl-textfield__input" type="text" id="suffix-input" value="no suffix" readonly tabIndex="-1">
+                                    <label for="suffix-input">
+                                        <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+                                    </label>
+                                    <ul for="suffix-input" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                                        <li class="mdl-menu__item">no suffix</li>
+                                        <li class="mdl-menu__item">timestamp suffix</li>
+                                        <li class="mdl-menu__item">host suffix</li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div id="errors"></div>
+                <div id="status"></div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="footer">
+            <div class="copyright"><br />&copy;2016 <a href="http://www.alexopus.com">www.alexopus.com</a></div>
+        </div>
+    </div>
+
+    <script src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "Save Image Router",
+  "description": "Save images to custom locations from the context menu.",
+  "version": "0.2.4",
+
+  "background" : { "scripts": ["menus.js"] },
+
+  "permissions": [
+    "contextMenus",
+    "downloads",
+    "storage"
+  ],
+
+  "options_page": "options.html",
+
+  "icons" : {
+    "16" : "SaveImageRouter_16x16.png",
+    "48" : "SaveImageRouter_48x48.png",
+    "128" : "SaveImageRouter_128x128.png"
+  },
+
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+
+  "manifest_version": 2
+}
