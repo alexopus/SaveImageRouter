@@ -1,4 +1,4 @@
-# SaveImageRouter
+# Save Image Router
 
 Chrome plugin to save images to custom location from the context menu.
 
