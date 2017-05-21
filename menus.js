@@ -3,6 +3,7 @@ function saveImageTo(info, tab) {
     var a = document.createElement('a');
     a.href = info.pageUrl;
     var pageUrl = a.hostname;
+    var path_ = a.pathname.replace(new RegExp('/', 'g'), '_');
     var filename = url.substring(url.lastIndexOf('/') + 1);
     var ext = filename.substr(filename.lastIndexOf('.') + 1);
     var filename = filename.substring(0, filename.lastIndexOf('.'));
@@ -45,6 +46,9 @@ function saveImageTo(info, tab) {
                 case 'host prefix':
                     filename = pageUrl + '_' + filename;
                     break;
+                case 'URL path':
+                    filename = path_ + '_' + filename;
+                    break;
                 default:
                     break;
             }
@@ -57,6 +61,9 @@ function saveImageTo(info, tab) {
                     break;
                 case 'host suffix':
                     filename = filename + '_' + pageUrl;
+                    break;
+                case 'URL path':
+                    filename = filename + '_' + path_;
                     break;
                 default:
                     break;
