@@ -113,13 +113,29 @@ chrome.contextMenus.create({
     "id": "SIT",
     "title": "Save Image to",
     "contexts": ["image"]
-    // "contexts": ["image", "link", "video", "audio"]
 });
 
 chrome.storage.local.get({
     entries: []
 }, function(items) {
     createMenus(items);
+});
+
+// update menus when new entries are saved from the options
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+    chrome.contextMenus.removeAll();
+
+    chrome.contextMenus.create({
+        "id": "SIT",
+        "title": "Save Image to...",
+        "contexts": ["image"]
+    });
+
+    chrome.storage.local.get({
+        entries: []
+    }, function(items) {
+        createMenus(items);
+    });
 });
 
 function createMenus(items) {
