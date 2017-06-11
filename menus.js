@@ -109,6 +109,16 @@ function saveImageTo(info, tab) {
     });
 }
 
+function saveToDefault(info, tab) {
+    var url = info.srcUrl;
+    chrome.downloads.download({
+        url: url,
+        filename: url.substring(url.lastIndexOf('/') + 1),
+        conflictAction: "uniquify",
+        saveAs: false
+    });
+}
+
 chrome.contextMenus.create({
     "id": "SIT",
     "title": "Save Image to",
@@ -147,5 +157,13 @@ function createMenus(items) {
             "title": entry.title,
             "onclick": saveImageTo
         });
+    });
+
+    chrome.contextMenus.create({
+        "parentId": "SIT",
+        "contexts": ["image"],
+        "id": "_____internal_saveimagerouter_default_____",
+        "title": "_default_",
+        "onclick": saveToDefault
     });
 };
