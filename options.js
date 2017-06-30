@@ -1,3 +1,10 @@
+function popAlert(text) {
+    $('#status').text(text).show('fast');
+    setTimeout(function() {
+        $('#status').text('').hide('fast');
+    }, 1000);
+}
+
 function saveOptions() {
     var $entries = $('.entry');
 
@@ -23,10 +30,7 @@ function saveOptions() {
     chrome.storage.local.set({
         entries: newEntries
     }, function() {
-        $('#status').text('Directories saved.').show('fast');
-        setTimeout(function() {
-            $('#status').text('').hide('fast');
-        }, 1000);
+        popAlert('Directories saved.');
     });
 }
 
@@ -174,6 +178,28 @@ function initialize(items) {
         stop: function(event, ui) { saveOptions(); }
     });
 
+    if (items.defaultEntry === true) {
+        $('#extra-default-entry').get(0).parentElement.MaterialCheckbox.check();
+    } else {
+        $('#extra-default-entry').get(0).parentElement.MaterialCheckbox.uncheck();
+    }
+
+    $('#extra-default-entry').on('click', function() {
+        if ($('#extra-default-entry').prop('checked') === true) {
+            chrome.storage.local.set({
+                defaultEntry: true
+            }, function() {
+                popAlert('Saved.');
+            });
+        } else {
+            chrome.storage.local.set({
+                defaultEntry: false
+            }, function() {
+                popAlert('Saved.');
+            });
+        }
+    });
+
     if (items.hints === true) {
         $(".hint").show();
         $(".hints-toggle").text("keyboard_arrow_up");
@@ -248,7 +274,8 @@ function initialize(items) {
 function restoreOptions() {
     chrome.storage.local.get({
         entries: [],
-        hints: true
+        hints: true,
+        defaultEntry: true
     }, function(items) {
         initialize(items);
     });

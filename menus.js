@@ -119,22 +119,7 @@ function saveToDefault(info, tab) {
     });
 }
 
-chrome.contextMenus.create({
-    "id": "SIT",
-    "title": "Save Image to",
-    "contexts": ["image"]
-});
-
-chrome.storage.local.get({
-    entries: []
-}, function(items) {
-    createMenus(items);
-});
-
-// update menus when new entries are saved from the options
-chrome.storage.onChanged.addListener(function(changes, namespace) {
-    chrome.contextMenus.removeAll();
-
+function createMenus() {
     chrome.contextMenus.create({
         "id": "SIT",
         "title": "Save Image to...",
@@ -144,11 +129,34 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     chrome.storage.local.get({
         entries: []
     }, function(items) {
-        createMenus(items);
+        createEntriesMenus(items);
     });
+
+    chrome.storage.local.get({
+        defaultEntry: true
+    }, function(items) {
+        if (items.defaultEntry === true)
+        {
+            chrome.contextMenus.create({
+                "parentId": "SIT",
+                "contexts": ["image"],
+                "id": "_____internal_saveimagerouter_default_____",
+                "title": "_default_",
+                "onclick": saveToDefault
+            });
+        }
+    });
+}
+
+createMenus();
+
+// update menus when new entries are saved from the options
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+    chrome.contextMenus.removeAll();
+    createMenus();
 });
 
-function createMenus(items) {
+function createEntriesMenus(items) {
     items.entries.forEach(function(entry) {
         chrome.contextMenus.create({
             "parentId": "SIT",
@@ -157,13 +165,5 @@ function createMenus(items) {
             "title": entry.title,
             "onclick": saveImageTo
         });
-    });
-
-    chrome.contextMenus.create({
-        "parentId": "SIT",
-        "contexts": ["image"],
-        "id": "_____internal_saveimagerouter_default_____",
-        "title": "_default_",
-        "onclick": saveToDefault
     });
 };

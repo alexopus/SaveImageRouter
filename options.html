@@ -337,6 +337,16 @@
             display: none;
         }
 
+        #extra-options {
+            padding: 15px;
+            text-align: center;
+        }
+
+        #extra-options .mdl-checkbox__label {
+            margin-left: 4px;
+            font-size: 13px;
+        }
+
         #hints {
             position: relative;
             border: 1px dotted silver;
@@ -499,6 +509,13 @@
                         </tr>
                     </tbody>
                 </table>
+
+                <div id="extra-options">
+                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="extra-default-entry">
+                        <input type="checkbox" id="extra-default-entry" class="mdl-checkbox__input">
+                        <span class="mdl-checkbox__label">Show default location in the menu (_default_).</span>
+                    </label>
+                </div>
 
                 <div id="errors"></div>
                 <div id="status"></div>
