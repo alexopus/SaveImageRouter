@@ -123,7 +123,7 @@ function createMenus() {
     chrome.contextMenus.create({
         "id": "SIT",
         "title": "Save Image to...",
-        "contexts": ["image"]
+        "contexts": ["image", "video"]
     });
 
     chrome.storage.local.get({
@@ -139,7 +139,7 @@ function createMenus() {
         {
             chrome.contextMenus.create({
                 "parentId": "SIT",
-                "contexts": ["image"],
+                "contexts": ["image", "video"],
                 "id": "_____internal_saveimagerouter_default_____",
                 "title": "_default_",
                 "onclick": saveToDefault
@@ -160,7 +160,7 @@ function createEntriesMenus(items) {
     items.entries.forEach(function(entry) {
         chrome.contextMenus.create({
             "parentId": "SIT",
-            "contexts": ["image"],
+            "contexts": ["image", "video"],
             "id": entry.title,
             "title": entry.title,
             "onclick": saveImageTo
