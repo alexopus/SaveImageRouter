@@ -281,5 +281,5 @@ function restoreOptions() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', restoreOptions);
+$(window).on("load", restoreOptions);
 // document.getElementById('save').addEventListener('click', saveOptions);
