@@ -1,3 +1,10 @@
+# No longer maintained
+I am no longer actively maintaining this extension until further notice, because I have switched back to Firefox.
+Feel free to fork it and do whatever the license permits.
+Or use another similar extension:
+[Save In...](https://chrome.google.com/webstore/detail/save-in%E2%80%A6/jpblofcpgfjikaapfedldfeilmpgkedf?hl=en-US)
+(that is also available for Firefox).
+
 # Save Image Router
 
 Chrome plugin to save images to custom location from the context menu.
